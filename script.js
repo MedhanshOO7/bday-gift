@@ -22,9 +22,6 @@ const CONFIG = {
     "Happy Birthday, Rashi 🎂🌸",
   ],
 
-  // CUSTOMIZATION: Path to your background music file
-  musicFilePath: "assets/music/romantic.mp3",
-
   // CUSTOMIZATION: Funny messages when "No" is clicked
   funnyMessages: [
     "Are you sure? 🥺",
@@ -43,9 +40,9 @@ const CONFIG = {
 
   // Timing (milliseconds)
   timings: {
-    subtitleDelay: 1200,     // When subtitle appears
-    questionDelay: 2400,     // When question appears
-    buttonsDelay: 3200,      // When buttons appear
+    subtitleDelay: 0,        // Show the opening question immediately
+    questionDelay: 0,
+    buttonsDelay: 0,
     typingSpeed: 55,         // ms per character
     messageGap: 2000,        // Pause between celebration messages
     lilyDelay: 1500,         // Delay before lily bloom
@@ -62,6 +59,8 @@ let noClickCount = 0;
 let isMobile = window.innerWidth <= 768;
 let heartsAnimationId = null;
 let sparkleInterval = null;
+let dustAnimationId = null;
+let cakeConfettiInterval = null;
 
 // Cached DOM references (set on DOMContentLoaded)
 let DOM = {};
@@ -93,10 +92,8 @@ document.addEventListener("DOMContentLoaded", () => {
     sparklesContainer: document.getElementById("sparkles-container"),
     liliesContainer: document.getElementById("lilies-container"),
     particlesContainer: document.getElementById("particles-container"),
-    bgMusic:         document.getElementById("bg-music"),
     polaroids:       document.querySelectorAll(".polaroid"),
     buttonsContainer: document.querySelector(".buttons-container"),
-    musicToggle:     document.getElementById("music-toggle"),
   };
 
   setupPageQuestion();
@@ -206,7 +203,8 @@ function setupEventListeners() {
       setTimeout(() => {
         DOM.pageLetter.style.display = "none";
         DOM.pageMemories.style.display = "none";
-        
+
+        stopDustParticles();
         DOM.pageCake.classList.add("active");
         window.scrollTo(0, 0);
         document.body.style.overflowY = "hidden"; // lock scroll on cake
@@ -215,18 +213,6 @@ function setupEventListeners() {
     });
   }
 
-  // Music Toggle
-  if (DOM.musicToggle) {
-    DOM.musicToggle.addEventListener("click", () => {
-      if (DOM.bgMusic.paused) {
-        DOM.bgMusic.play();
-        DOM.musicToggle.classList.remove("muted");
-      } else {
-        DOM.bgMusic.pause();
-        DOM.musicToggle.classList.add("muted");
-      }
-    });
-  }
 }
 
 // ============================================
@@ -235,11 +221,13 @@ function setupEventListeners() {
 function initCakeConfetti() {
   const container = document.getElementById("cake-particles");
   if (!container) return;
-  
+
+  if (cakeConfettiInterval) return;
+
   const colors = ["#fce4d6", "#fef6e4", "#f4c7c3", "#ffffff"];
   
   // Spawn soft petal confetti sparsely
-  setInterval(() => {
+  cakeConfettiInterval = setInterval(() => {
     const confetti = document.createElement("div");
     confetti.className = "confetti";
     confetti.style.left = Math.random() * 100 + "vw";
@@ -331,29 +319,11 @@ function showFunnyMessage() {
 // YES BUTTON — Trigger celebration!
 // ============================================
 function handleYesClick() {
-  // Try to play music (requires user gesture)
-  playMusic();
+  stopFloatingHearts();
 
   // Transition from Question → Celebration
   transitionPages(DOM.pageQuestion, DOM.pageCelebration).then(() => {
     startCelebration();
-  });
-}
-
-
-// ============================================
-// MUSIC
-// ============================================
-function playMusic() {
-  const audio = DOM.bgMusic;
-  if (!audio) return;
-
-  audio.volume = 0.4;
-  audio.loop = true;
-
-  // Attempt to play; gracefully handle missing file
-  audio.play().catch((err) => {
-    console.log("Music playback skipped:", err.message);
   });
 }
 
@@ -513,6 +483,15 @@ function startFloatingHearts() {
   animate();
 }
 
+function stopFloatingHearts() {
+  if (heartsAnimationId) {
+    cancelAnimationFrame(heartsAnimationId);
+    heartsAnimationId = null;
+  }
+
+  DOM.heartsContainer?.replaceChildren();
+}
+
 
 // ============================================
 // HEART BURST — Celebration explosion
@@ -615,7 +594,7 @@ function lilyExplosion() {
   
   container.style.cssText = 'position: fixed; inset: 0; z-index: 100; pointer-events: none; overflow: visible;';
   
-  const count = isMobile ? 105 : 210; // Specific count requested by user
+  const count = isMobile ? 45 : 90;
   const lilies = [];
   
   for (let i = 0; i < count; i++) {
@@ -626,11 +605,11 @@ function lilyExplosion() {
     const size = 38 + Math.random() * 62; // 38-100px (increased by ~25%)
     const color = CONFIG.lilyColors[Math.floor(Math.random() * CONFIG.lilyColors.length)];
     
-    // Create optimized flower (8 petals for fullness with much less DOM lag)
-    for (let p = 0; p < 8; p++) {
+    // Six petals keep the burst full while avoiding a large DOM spike.
+    for (let p = 0; p < 6; p++) {
       const petal = document.createElement('div');
       petal.className = 'explosion-petal';
-      const angle = p * 45; // 360/8
+      const angle = p * 60;
       const pScale = 0.8 + Math.random() * 0.4; // slight size variation per petal
       petal.style.cssText = `
         position: absolute;
@@ -858,10 +837,19 @@ function startDustParticles() {
       p.el.style.transform = `translate3d(${p.x}px, ${p.y}px, 0)`;
     });
 
-    requestAnimationFrame(animateDust);
+    dustAnimationId = requestAnimationFrame(animateDust);
   }
 
   animateDust();
+}
+
+function stopDustParticles() {
+  if (dustAnimationId) {
+    cancelAnimationFrame(dustAnimationId);
+    dustAnimationId = null;
+  }
+
+  DOM.particlesContainer?.replaceChildren();
 }
 
 

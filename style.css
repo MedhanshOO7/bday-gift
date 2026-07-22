@@ -141,11 +141,10 @@ img {
    PAGE SYSTEM — Transitions between sections
    ========================================================================== */
 .page {
-  position: absolute;
-  top: 0;
-  left: 0;
+  position: fixed;
+  inset: 0;
   width: 100%;
-  min-height: 100vh;
+  height: 100vh;
   opacity: 0;
   visibility: hidden;
   transition: opacity 1.2s ease, visibility 1.2s ease;
@@ -229,8 +228,7 @@ img {
   width: 88%;
   text-align: center;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.06);
-  animation: cardEntrance 1.2s var(--ease-out-back) forwards;
-  opacity: 0;
+  opacity: 1;
 }
 
 /* Card heading */
@@ -268,8 +266,8 @@ img {
 
 /* Hidden text that JS reveals */
 .hidden-text {
-  opacity: 0;
-  transform: translateY(12px);
+  opacity: 1;
+  transform: translateY(0);
   transition: opacity 0.8s ease, transform 0.8s ease;
 }
 .hidden-text.visible {
@@ -283,8 +281,8 @@ img {
   justify-content: center;
   align-items: center;
   gap: 1.5rem;
-  opacity: 0;
-  transform: translateY(15px);
+  opacity: 1;
+  transform: translateY(0);
   transition: opacity 0.8s ease, transform 0.8s ease;
 }
 .buttons-container.visible {
@@ -712,7 +710,6 @@ img {
   border-radius: 12px;
   box-shadow: 0 2px 15px rgba(0, 0, 0, 0.06);
   cursor: pointer;
-  will-change: transform, opacity;
   transition: opacity 0.8s ease, transform 0.4s var(--ease-out-back);
   opacity: 0;
   margin-bottom: 1.5rem;
@@ -732,6 +729,10 @@ img {
   transform: translateY(-6px) !important;
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
   z-index: 100 !important;
+}
+
+.polaroid:hover {
+  will-change: transform;
 }
 
 /* Photo area */
@@ -1172,33 +1173,11 @@ img {
   100% { transform: translateY(110vh) translateX(50px) rotate(360deg); opacity: 0; }
 }
 
-/* ==========================================================================
-   MUSIC TOGGLE
-   ========================================================================== */
-.music-toggle {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(5px);
-  border: 1px solid rgba(200, 180, 140, 0.3);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  z-index: 1000;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-  transition: transform 0.3s ease, background 0.3s ease;
-}
-
-.music-toggle:hover {
-  transform: scale(1.1);
-  background: rgba(255, 255, 255, 0.9);
-}
-
-.music-toggle.muted .music-icon {
-  opacity: 0.5;
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
 }
