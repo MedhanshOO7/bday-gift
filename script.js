@@ -96,6 +96,7 @@ document.addEventListener("DOMContentLoaded", () => {
     bgMusic:         document.getElementById("bg-music"),
     polaroids:       document.querySelectorAll(".polaroid"),
     buttonsContainer: document.querySelector(".buttons-container"),
+    musicToggle:     document.getElementById("music-toggle"),
   };
 
   setupPageQuestion();
@@ -191,20 +192,14 @@ function setupEventListeners() {
   });
 
   // Memories Nav Interactions
-  if (DOM.btnMemoriesBack) {
-    DOM.btnMemoriesBack.addEventListener("click", () => {
-      // Scroll back up to the letter smoothly
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-  }
   if (DOM.btnMemoriesNext) {
     DOM.btnMemoriesNext.addEventListener("click", () => {
-      // Transition to Cake page
-      DOM.pageLetter.style.transition = "opacity 0.8s ease, visibility 0.8s";
+      // Smooth cross-fade transition to Cake page
+      DOM.pageLetter.style.transition = "opacity 1.2s ease, visibility 1.2s";
       DOM.pageLetter.style.opacity = "0";
       DOM.pageLetter.style.visibility = "hidden";
       
-      DOM.pageMemories.style.transition = "opacity 0.8s ease, visibility 0.8s";
+      DOM.pageMemories.style.transition = "opacity 1.2s ease, visibility 1.2s";
       DOM.pageMemories.style.opacity = "0";
       DOM.pageMemories.style.visibility = "hidden";
       
@@ -213,7 +208,20 @@ function setupEventListeners() {
         window.scrollTo(0, 0);
         document.body.style.overflowY = "hidden"; // lock scroll on cake
         initCakeConfetti();
-      }, 800);
+      }, 1000);
+    });
+  }
+
+  // Music Toggle
+  if (DOM.musicToggle) {
+    DOM.musicToggle.addEventListener("click", () => {
+      if (DOM.bgMusic.paused) {
+        DOM.bgMusic.play();
+        DOM.musicToggle.classList.remove("muted");
+      } else {
+        DOM.bgMusic.pause();
+        DOM.musicToggle.classList.add("muted");
+      }
     });
   }
 }
@@ -225,22 +233,22 @@ function initCakeConfetti() {
   const container = document.getElementById("cake-particles");
   if (!container) return;
   
-  const colors = ["#ffc2d1", "#ff85a1", "#ff6b9d", "#f1c40f", "#fff5e4", "#c9a0dc"];
+  const colors = ["#fce4d6", "#fef6e4", "#f4c7c3", "#ffffff"];
   
-  // Spawn sparsely
+  // Spawn soft petal confetti sparsely
   setInterval(() => {
     const confetti = document.createElement("div");
     confetti.className = "confetti";
     confetti.style.left = Math.random() * 100 + "vw";
     confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
     
-    // Randomize duration and size
-    const duration = 4 + Math.random() * 3;
+    // Randomize duration and size for petals
+    const duration = 6 + Math.random() * 4;
     confetti.style.animationDuration = duration + "s";
     
-    const size = 5 + Math.random() * 10;
+    const size = 12 + Math.random() * 10;
     confetti.style.width = size + "px";
-    confetti.style.height = (size * 1.5) + "px";
+    confetti.style.height = size + "px";
     
     container.appendChild(confetti);
     
