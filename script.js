@@ -216,11 +216,46 @@ function setupEventListeners() {
         DOM.pageCake.classList.add("active");
         window.scrollTo(0, 0);
         document.body.style.overflowY = "hidden"; // lock scroll on cake
+        initCakeConfetti();
       }, 800);
     });
   }
 }
 
+// ============================================
+// CAKE CONFETTI
+// ============================================
+function initCakeConfetti() {
+  const container = document.getElementById("cake-particles");
+  if (!container) return;
+  
+  const colors = ["#ffc2d1", "#ff85a1", "#ff6b9d", "#f1c40f", "#fff5e4", "#c9a0dc"];
+  
+  // Spawn sparsely
+  setInterval(() => {
+    const confetti = document.createElement("div");
+    confetti.className = "confetti";
+    confetti.style.left = Math.random() * 100 + "vw";
+    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+    
+    // Randomize duration and size
+    const duration = 4 + Math.random() * 3;
+    confetti.style.animationDuration = duration + "s";
+    
+    const size = 5 + Math.random() * 10;
+    confetti.style.width = size + "px";
+    confetti.style.height = (size * 1.5) + "px";
+    
+    container.appendChild(confetti);
+    
+    // Clean up
+    setTimeout(() => {
+      if (confetti.parentNode) {
+        confetti.remove();
+      }
+    }, duration * 1000);
+  }, 400); // 400ms interval for sparse effect
+}
 
 // ============================================
 // NO BUTTON — Playful dodging behavior
