@@ -553,10 +553,11 @@ img {
 
 .letter-content p {
   font-family: 'Nunito', sans-serif;
-  font-size: 0.95rem;
-  color: #4a4048;
-  line-height: 1.75;
+  font-size: 1rem;
+  color: #3b3340;
+  line-height: 1.7;
   margin-bottom: 1rem;
+  font-weight: 500;
 }
 
 /* OPEN STATE */
@@ -1009,7 +1010,7 @@ img {
    PAGE 5 — VIRTUAL CAKE
    ========================================================================== */
 #page-cake {
-  background: radial-gradient(circle at center, #1a1535 0%, #0a0812 100%);
+  background: linear-gradient(160deg, #fef6e4 0%, #fce4d6 30%, #f0d9e8 60%, #e4daf0 100%);
   display: flex;
   justify-content: center;
   align-items: center;

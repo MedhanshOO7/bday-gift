@@ -204,6 +204,9 @@ function setupEventListeners() {
       DOM.pageMemories.style.visibility = "hidden";
       
       setTimeout(() => {
+        DOM.pageLetter.style.display = "none";
+        DOM.pageMemories.style.display = "none";
+        
         DOM.pageCake.classList.add("active");
         window.scrollTo(0, 0);
         document.body.style.overflowY = "hidden"; // lock scroll on cake
