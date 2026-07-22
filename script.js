@@ -38,8 +38,8 @@ const CONFIG = {
   // Heart emoji pool for floating particles
   heartEmojis: ["❤️", "💕", "💗", "💖", "💝", "🩷"],
 
-  // Lily flower colors (All white per request)
-  lilyColors: ["#ffffff"],
+  // Lily flower colors (richer colors to contrast with the warm light background)
+  lilyColors: ["#d81159", "#8f2d56", "#c71f37", "#a41623", "#7209b7"],
 
   // Timing (milliseconds)
   timings: {
