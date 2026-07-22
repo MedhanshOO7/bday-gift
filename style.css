@@ -554,10 +554,11 @@ img {
   left: 10px;
   right: 10px;
   bottom: 10px;
-  background: var(--paper);
+  background: #fff4a3; /* Cartoonish pastel yellow */
   padding: 2rem 1.5rem;
   border-radius: 16px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  border: 3px solid #f9a826; /* Cartoon outline */
+  box-shadow: 6px 6px 0px rgba(0,0,0,0.15); /* Cartoon pop shadow */
   z-index: 2;
   transition: transform 0.8s 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), 
               width 0.8s 0.8s, height 0.8s 0.8s, top 0.8s 0.8s, left 0.8s 0.8s;
@@ -1078,4 +1079,125 @@ img {
   .closing-text {
     font-size: var(--fs-2xl);
   }
+}
+
+/* ==========================================================================
+   PAGE 5 — VIRTUAL CAKE
+   ========================================================================== */
+#page-cake {
+  background-color: var(--dark-purple);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.cake-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  z-index: 10;
+}
+
+.cake {
+  position: relative;
+  width: 250px;
+  height: 250px;
+  margin-top: 20px;
+}
+
+.tier {
+  position: absolute;
+  border-radius: 12px;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 4px solid #fff;
+  box-shadow: inset 0 -10px 0 rgba(0,0,0,0.1), 0 8px 0 rgba(0,0,0,0.1);
+}
+
+.tier-1 {
+  width: 220px;
+  height: 80px;
+  background: var(--pink-vivid);
+  z-index: 3;
+}
+
+.tier-2 {
+  width: 160px;
+  height: 65px;
+  bottom: 80px;
+  background: var(--gold-deep);
+  z-index: 2;
+}
+
+.tier-3 {
+  width: 100px;
+  height: 50px;
+  bottom: 145px;
+  background: var(--pink-soft);
+  z-index: 1;
+}
+
+/* Simple dripping icing */
+.icing {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 25px;
+  background: #fff;
+  border-radius: 12px 12px 20px 20px;
+}
+
+.candle {
+  position: absolute;
+  width: 14px;
+  height: 50px;
+  background: repeating-linear-gradient(45deg, #fff, #fff 5px, var(--pink-deep) 5px, var(--pink-deep) 10px);
+  bottom: 195px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 4px;
+  z-index: 0;
+  border: 2px solid #fff;
+}
+
+.flame {
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  width: 18px;
+  height: 30px;
+  background: #ff9d00;
+  border-radius: 50% 50% 20% 20%;
+  transform: translateX(-50%);
+  box-shadow: 0 0 20px #ff9d00, 0 0 40px #ffdb58;
+  animation: flicker 0.2s infinite alternate;
+}
+
+@keyframes flicker {
+  0% { transform: translateX(-50%) scale(1) rotate(-2deg); opacity: 0.9; }
+  100% { transform: translateX(-50%) scale(1.1) rotate(2deg); opacity: 1; }
+}
+
+.cake-message {
+  margin-top: 40px;
+  color: white;
+  animation: float 4s ease-in-out infinite;
+}
+
+.cake-message h2 {
+  font-size: 3.5rem;
+  margin-bottom: 10px;
+  color: var(--pink-soft);
+  text-shadow: 0 0 20px rgba(255, 194, 209, 0.4);
+}
+
+.cake-message p {
+  font-size: 1.5rem;
+  font-family: 'Nunito', sans-serif;
+  color: var(--white-90);
 }

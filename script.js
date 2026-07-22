@@ -81,10 +81,12 @@ document.addEventListener("DOMContentLoaded", () => {
     pageCelebration: document.getElementById("page-celebration"),
     pageLetter:      document.getElementById("page-letter"),
     pageMemories:    document.getElementById("page-memories"),
+    pageCake:        document.getElementById("page-cake"),
     btnYes:          document.getElementById("btn-yes"),
     btnNo:           document.getElementById("btn-no"),
     envelopeWrapper: document.getElementById("envelope-wrapper"),
-    btnNextMemories: document.getElementById("btn-next-memories"),
+    btnMemoriesBack: document.getElementById("btn-memories-back"),
+    btnMemoriesNext: document.getElementById("btn-memories-next"),
     letterParticles: document.getElementById("letter-particles"),
     funnyMessage:    document.getElementById("funny-message"),
     questionText:    document.getElementById("question-text"),
@@ -191,6 +193,32 @@ function setupEventListeners() {
       }
     });
   });
+
+  // Memories Nav Interactions
+  if (DOM.btnMemoriesBack) {
+    DOM.btnMemoriesBack.addEventListener("click", () => {
+      // Scroll back up to the letter smoothly
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+  if (DOM.btnMemoriesNext) {
+    DOM.btnMemoriesNext.addEventListener("click", () => {
+      // Transition to Cake page
+      DOM.pageLetter.style.transition = "opacity 0.8s ease, visibility 0.8s";
+      DOM.pageLetter.style.opacity = "0";
+      DOM.pageLetter.style.visibility = "hidden";
+      
+      DOM.pageMemories.style.transition = "opacity 0.8s ease, visibility 0.8s";
+      DOM.pageMemories.style.opacity = "0";
+      DOM.pageMemories.style.visibility = "hidden";
+      
+      setTimeout(() => {
+        DOM.pageCake.classList.add("active");
+        window.scrollTo(0, 0);
+        document.body.style.overflowY = "hidden"; // lock scroll on cake
+      }, 800);
+    });
+  }
 }
 
 
