@@ -763,7 +763,7 @@ img {
 /* ---- Polaroid Card ---- */
 .polaroid {
   position: relative;
-  background: var(--white);
+  background: var(--cream-warm);
   padding: 0.75rem 0.75rem 2.5rem;
   border-radius: 16px;
   box-shadow: var(--shadow-md);
