@@ -19,7 +19,7 @@ const CONFIG = {
   // CUSTOMIZATION: Change the celebration messages
   celebrationMessages: [
     "Besties for life, no refunds! 🎉",
-    "Happy Birthday, Lily 🎂🌸",
+    "Happy Birthday, Rashi 🎂🌸",
   ],
 
   // CUSTOMIZATION: Path to your background music file
@@ -27,16 +27,12 @@ const CONFIG = {
 
   // CUSTOMIZATION: Funny messages when "No" is clicked
   funnyMessages: [
-    "Are you sure?? 🥺",
+    "Are you sure? 🥺",
     "Think again bestie! 💛",
-    "That's illegal. 😤",
-    "Wrong answer! 😤",
-    "You clicked the wrong button.",
-    "Nope, try again! ✨",
-    "Not an option bestie! 🚫",
-    "My friendship says no to your no 🫶",
-    "The button is running away! 🏃",
-    "Almost impossible now! 😏",
+    "Wrong answer! 😄",
+    "Not an option bestie 😌",
+    "Try the other one ✨",
+    "Come on, you know the answer 🫣",
   ],
 
   // Heart emoji pool for floating particles
@@ -267,43 +263,37 @@ function handleNoClick() {
   const yesBtn = DOM.btnYes;
   const card = document.querySelector(".question-card");
 
-  // 1) Show funny message
+  // 1) Show gentle nudge
   showFunnyMessage();
 
-  // 2) Shake the card briefly
-  card.style.animation = "shake 0.4s ease";
-  setTimeout(() => { card.style.animation = ""; }, 400);
-
-  // 3) Move No button to random position
+  // 2) Gently float the No button to a new position (bounded within card)
   const cardRect = card.getBoundingClientRect();
-
-  // Use card-relative positioning for better containment
-  const maxX = cardRect.width * 0.7;
-  const maxY = cardRect.height * 0.5;
-  const randX = (Math.random() - 0.5) * maxX;
-  const randY = (Math.random() - 0.5) * maxY;
-
-  // 4) Shrink No button, grow Yes button
-  const shrink = Math.max(Math.pow(0.82, noClickCount), 0.25);
-  const rotation = Math.floor(Math.random() * 50) - 25;
+  const btnRect = noBtn.getBoundingClientRect();
+  
+  // Calculate safe bounds so button stays inside the card
+  const maxOffsetX = (cardRect.width / 2) - (btnRect.width / 2) - 20;
+  const maxOffsetY = 60; // Only drift vertically a little
+  
+  const randX = (Math.random() - 0.5) * maxOffsetX * 1.2;
+  const randY = Math.random() * maxOffsetY;
 
   noBtn.style.position = "relative";
-  noBtn.style.transition = "all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1)";
-  noBtn.style.transform = `translate(${randX}px, ${randY}px) scale(${shrink}) rotate(${rotation}deg)`;
+  noBtn.style.transition = "all 0.6s cubic-bezier(0.25, 1, 0.5, 1)";
+  noBtn.style.transform = `translate(${randX}px, ${randY}px)`;
 
-  // Opacity stages
-  if (noClickCount >= 5 && noClickCount < 8) {
-    noBtn.style.opacity = "0.55";
-  } else if (noClickCount >= 8) {
-    noBtn.style.opacity = "0.15";
-    noBtn.style.pointerEvents = "none"; // Nearly impossible
+  // Gradually fade the No button
+  if (noClickCount >= 3 && noClickCount < 5) {
+    noBtn.style.opacity = "0.6";
+  } else if (noClickCount >= 5) {
+    noBtn.style.opacity = "0.2";
+    noBtn.style.pointerEvents = "none";
   }
 
-  // Grow Yes button
-  const grow = 1 + noClickCount * 0.08;
-  yesBtn.style.transition = "transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)";
-  yesBtn.style.transform = `scale(${Math.min(grow, 1.8)})`;
-  yesBtn.style.animation = "none"; // Stop the pulse to show the scale
+  // Subtly grow Yes button
+  const grow = 1 + noClickCount * 0.04;
+  yesBtn.style.transition = "transform 0.5s cubic-bezier(0.25, 1, 0.5, 1)";
+  yesBtn.style.transform = `scale(${Math.min(grow, 1.3)})`;
+  yesBtn.style.animation = "none";
 }
 
 
