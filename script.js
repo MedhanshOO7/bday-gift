@@ -408,7 +408,7 @@ function startFloatingHearts() {
   const container = DOM.heartsContainer;
   if (!container) return;
 
-  const maxHearts = isMobile ? 12 : 25;
+  const maxHearts = isMobile ? 8 : 25;
   const hearts = [];
 
   function spawnHeart() {
@@ -594,7 +594,7 @@ function lilyExplosion() {
   
   container.style.cssText = 'position: fixed; inset: 0; z-index: 100; pointer-events: none; overflow: visible;';
   
-  const count = isMobile ? 45 : 90;
+  const count = isMobile ? 30 : 90;
   const lilies = [];
   
   for (let i = 0; i < count; i++) {
@@ -790,7 +790,7 @@ function startDustParticles() {
   const container = DOM.particlesContainer;
   if (!container) return;
 
-  const count = isMobile ? 25 : 50;
+  const count = isMobile ? 16 : 50;
   const particles = [];
 
   for (let i = 0; i < count; i++) {

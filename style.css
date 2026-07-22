@@ -716,6 +716,8 @@ img {
   break-inside: avoid;
   display: inline-block;
   width: 100%;
+  content-visibility: auto;
+  contain-intrinsic-size: auto 320px;
 }
 
 /* Visible state (set by IntersectionObserver) */
@@ -930,6 +932,10 @@ img {
 
 /* ---- Mobile ---- */
 @media (max-width: 768px) {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
   .question-card {
     padding: 2.5rem 2rem;
     border-radius: var(--radius-lg);
@@ -952,7 +958,20 @@ img {
   }
 
   #page-memories {
-    padding: 3rem 1.25rem 4rem;
+    padding: 2.5rem 1rem 3.5rem;
+  }
+
+  .particle-layer {
+    contain: layout paint;
+  }
+
+  .envelope-wrapper.open {
+    transform: translateY(36px);
+  }
+
+  .envelope-wrapper.open .letter-paper {
+    height: min(58vh, 500px);
+    min-height: 320px;
   }
 
   .memories-text {
@@ -1004,6 +1023,28 @@ img {
 
   .closing-text {
     font-size: var(--fs-2xl);
+  }
+
+  #page-cake {
+    padding: 1.5rem 1rem;
+  }
+
+  .cake {
+    transform: scale(0.88);
+    transform-origin: bottom center;
+    margin-bottom: -24px;
+  }
+
+  .cake-message {
+    margin-top: 2rem;
+  }
+
+  .cake-message h2 {
+    font-size: var(--fs-3xl);
+  }
+
+  .cake-message p {
+    font-size: var(--fs-base);
   }
 }
 
